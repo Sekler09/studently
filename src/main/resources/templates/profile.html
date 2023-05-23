@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="pl-10 pr-10">
+<div th:replace="~{fragments/header :: header}">
+</div>
+<h2  class="page-title text-2xl" th:text="#{profile.text}"></h2>
+<div class="profile-name">
+  <img th:if="${profiler.photo != ''}" th:src="@{${'/user-photos/' + profiler.id +'/'+ profiler.photo}}" class="w-20" />
+  <img th:unless="${profiler.photo != ''}" th:src="@{${'/user-photos/user.png'}}" class="w-20" />
+  <h1><span th:text="#{profile.welcomeLabel} + ', '"></span><span th:text="${profiler.name}"></span>!</h1>
+  <p><span th:text="#{form.emailLabel} + ': '"></span><span th:text="${profiler.email}"></span></p>
+  <h1 th:text="#{form.roleLabel}"/>
+  <div th:each="role : ${profiler.roles}">
+    <h2 th:text="${role.name}"/>
+  </div>
+  <div class="mt-2 mb-2">
+    <a class="mr-3 hover:underline hover:text-blue-600" href="/create-book" th:text="#{create.book}"></a>
+    <a class="hover:underline hover:text-blue-600" href="/logout" th:text="#{profile.logoutLabel}"></a>
+  </div>
+  <form class="mt-2 mb-2" th:action="@{/profile/setAdmin}" method="POST">
+    <button class="hover:underline hover:text-blue-600" type="submit" th:text="#{set.admin}"></button>
+  </form>
+  <form class="mt-2 mb-2" th:action="@{/profile/setAuthor}" method="POST">
+    <button class="hover:underline hover:text-blue-600" type="submit" th:text="#{set.author}"></button>
+  </form>
+
+  <div>
+    <h2 th:text="#{profile.user.booksLabel} + ':'"></h2>
+    <table>
+      <thead>
+      <tr>
+        <th th:text="#{profile.titleLabel}"></th>
+        <th th:text="#{profile.annotationLabel}"></th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+</body>
+</html>
