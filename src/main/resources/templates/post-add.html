@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Site Blog</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="pl-10 pr-10">
+<div th:replace="~{fragments/header :: header}"></div>
+
+<form class="grid gap-2 max-w-xs mx-auto" th:action="@{/post-add}" th:object="${post}" method="POST">
+  <div class="flex flex-col">
+    <label th:text="Title" for="title" />
+    <input type="text" id="title" placeholder="Title" th:field="*{title}" class="border-2 rounded-md px-2 py-1">
+  </div>
+  <div class="flex flex-col">
+    <label th:text="Text" for="text" />
+    <textarea name="text" id="text" placeholder="Enter text" th:field="*{text}" class="border-2 rounded-md px-2 py-1"></textarea>
+  </div>
+  <button
+          class="text-center rounded-md px-2 py-1 text-white bg-blue-500"
+          type="submit"
+          th:text="#{submitLabel}">
+  </button>
+</form>
+</body>
+</html>

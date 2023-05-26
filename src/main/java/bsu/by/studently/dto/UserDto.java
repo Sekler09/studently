@@ -40,6 +40,10 @@ public class UserDto {
         this.photo = photo;
     }
 
+    public boolean hasRole(String roleName){
+        return roles.stream().anyMatch(role -> role.getName().equals(roleName));
+    }
+
 
     public Long getId() {
         return id;

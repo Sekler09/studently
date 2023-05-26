@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Site Blog</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="pl-10 pr-10">
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container mt-50">
+  <h1>Site Blog</h1>
+  <div th:each="el : ${posts}" class="alert alert-info mt-2">
+    <h3 th:text="${el.title}"/>
+    <a th:href="'/blog/' + ${el.id}" class="btn btn-warning">Details</a>
+  </div>
+</div>
+</body>
+</html>

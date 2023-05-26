@@ -3,9 +3,11 @@ package bsu.by.studently.controller;
 import bsu.by.studently.dto.UserDto;
 import bsu.by.studently.model.Role;
 import bsu.by.studently.model.User;
+import bsu.by.studently.repository.PostRepository;
 import bsu.by.studently.service.UserService;
 import bsu.by.studently.util.FileUploadUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -19,19 +21,20 @@ import java.nio.file.Paths;
 @RequestMapping
 @Controller
 public class MainController {
-    private final UserService userService;
-
-    public MainController(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private PostRepository postRepository;
 
     @GetMapping("/")
-    public String getHomePage(){
+    public String getHomePage(Model model){
+        model.addAttribute("posts", postRepository.findAll());
         return "home";
     }
 
     @GetMapping("/home")
-    public String getHomePage2(){
+    public String getHomePage2(Model model){
+        model.addAttribute("posts", postRepository.findAll());
         return "home";
     }
 

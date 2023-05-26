@@ -22,8 +22,8 @@
     <a class="mr-3 hover:underline hover:text-blue-600" href="/create-book" th:text="#{create.book}"></a>
     <a class="hover:underline hover:text-blue-600" href="/logout" th:text="#{profile.logoutLabel}"></a>
   </div>
-  <form class="mt-2 mb-2" th:action="@{/profile/setAdmin}" method="POST">
-    <button class="hover:underline hover:text-blue-600" type="submit" th:text="#{set.admin}"></button>
+  <form th:if="${profiler.hasRole('AUTHOR')}" class="mt-2 mb-2" th:action="@{/profile/setAdmin}" method="POST">
+    <button class="hover:underline hover:text-blue-600" type="submit" >Add post</button>
   </form>
   <form class="mt-2 mb-2" th:action="@{/profile/setAuthor}" method="POST">
     <button class="hover:underline hover:text-blue-600" type="submit" th:text="#{set.author}"></button>
