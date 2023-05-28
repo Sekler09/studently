@@ -22,6 +22,9 @@ public class RoleService {
     public void setAuthorRole(User user){
         setRole(user, "AUTHOR");
     }
+    public void setAdminRole(User user){
+        setRole(user, "ADMIN");
+    }
 
     public void setRole(User user, String name){
         Role role = saveRole(name);

@@ -45,16 +45,33 @@ public class User {
     private String password;
 
     @Column(
-            name = "status",
-            nullable = false
-    )
-    private Boolean active = false;
-
-    @Column(
             name = "created_at",
             nullable = false
     )
     private LocalDateTime created_at;
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    @OneToMany(mappedBy = "author",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    List<Post> posts = new ArrayList<>();
+
+    public void addPost(Post post) {
+        posts.add(post);
+        post.setAuthor(this);
+    }
+
+    public void removePost(Post post) {
+        posts.remove(post);
+        post.setAuthor(null);
+    }
 
     public String getPhoto() {
         return photo;
@@ -96,14 +113,6 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
     }
 
     public LocalDateTime getCreated_at() {

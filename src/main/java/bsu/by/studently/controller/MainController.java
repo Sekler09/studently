@@ -1,13 +1,16 @@
 package bsu.by.studently.controller;
 
 import bsu.by.studently.dto.UserDto;
+import bsu.by.studently.model.Post;
 import bsu.by.studently.model.Role;
 import bsu.by.studently.model.User;
 import bsu.by.studently.repository.PostRepository;
+import bsu.by.studently.service.PostService;
 import bsu.by.studently.service.UserService;
 import bsu.by.studently.util.FileUploadUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -17,24 +20,32 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 @RequestMapping
 @Controller
 public class MainController {
     @Autowired
-    private UserService userService;
+    UserService userService;
     @Autowired
-    private PostRepository postRepository;
+    PostRepository postRepository;
+
+    @Autowired
+    PostService postService;
 
     @GetMapping("/")
-    public String getHomePage(Model model){
-        model.addAttribute("posts", postRepository.findAll());
+    public String getHomePage(Model model, @Param("keyword") String keyword){
+        List<Post> posts = postService.listAll(keyword);
+        model.addAttribute("posts", posts);
+        model.addAttribute("keyword", keyword);
         return "home";
     }
 
     @GetMapping("/home")
-    public String getHomePage2(Model model){
-        model.addAttribute("posts", postRepository.findAll());
+    public String getHomePage2(Model model, @Param("keyword") String keyword){
+        List<Post> posts = postService.listAll(keyword);
+        model.addAttribute("posts", posts);
+        model.addAttribute("keyword", keyword);
         return "home";
     }
 
@@ -56,12 +67,13 @@ public class MainController {
             } else {
                 Files.createDirectories(Paths.get(uploadDir));
             }
+            UserDto user = userService.authenticate(suspect.getEmail(), suspect.getPassword());
+            request.getSession().setAttribute("user", user);
+            return "redirect:/profile";
         } catch (Exception e) {
             model.addAttribute("registerError", e.getMessage());
             return "register";
         }
-
-        return "redirect:/";
     }
 
     @GetMapping("/login")

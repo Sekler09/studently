@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Users</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="pl-10 pr-10">
+<div th:replace="~{fragments/header :: header}">
+</div>
+  <h1>Users</h1>
+  <div class="flex flex-col">
+    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+        <div class="overflow-hidden">
+          <table class="min-w-full text-left text-sm font-light">
+            <thead class="border-b font-medium dark:border-neutral-500">
+            <tr>
+              <th scope="col" class="px-6 py-4">Id</th>
+              <th scope="col" class="px-6 py-4">Date of creation</th>
+              <th scope="col" class="px-6 py-4">Name</th>
+              <th scope="col" class="px-6 py-4">Email</th>
+              <th scope="col" class="px-6 py-4">Posts</th>
+              <th scope="col" class="px-6 py-4">Photo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}" class="border-b dark:border-neutral-500">
+              <td class="whitespace-nowrap px-6 py-4 font-medium" th:text="${user.id}"></td>
+              <td class="whitespace-nowrap px-6 py-4" th:text="${user.created_at}"></td>
+              <td class="whitespace-nowrap px-6 py-4" th:text="${user.name}"></td>
+              <td class="whitespace-nowrap px-6 py-4" th:text="${user.email}"></td>
+              <td class="whitespace-nowrap px-6 py-4">
+                <div th:each="post : ${user.posts}">
+                  <a th:href="'/post/' + ${post.id}" th:text="${post.title}"></a>
+                </div>
+              </td>
+              <td class="whitespace-nowrap px-6 py-4">
+                <img th:if="${user.photo != ''}" th:src="@{${'/user-photos/' + user.id +'/'+ user.photo}}" class="w-20 h-20" />
+                <img th:unless="${user.photo != ''}" th:src="@{${'/user-photos/user.png'}}" class="w-20 h-20"/>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <table th:each="user : ${users}" class="border-2 border-solid border-black mt-4">
+  </table>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package bsu.by.studently.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -48,6 +49,19 @@ public class Post {
             nullable = false
     )
     private LocalDateTime edited_at;
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="user_id", nullable = false)
+    @JsonIgnore
+    private User author;
 
     public Post(){}
 

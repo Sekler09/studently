@@ -1,6 +1,10 @@
 package bsu.by.studently.dto;
 
+import bsu.by.studently.model.Post;
 import bsu.by.studently.model.Role;
+import bsu.by.studently.model.User;
+
+import java.util.List;
 import java.util.Set;
 
 public class UserDto {
@@ -11,6 +15,16 @@ public class UserDto {
 
     private String email;
     private String photo;
+
+    private List<Post> posts;
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
 
     public String getPhoto() {
         return photo;
@@ -32,12 +46,13 @@ public class UserDto {
 
     public UserDto() {}
 
-    public UserDto(Long id, String name, String email, Set<Role> roles, String photo) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.roles = roles;
-        this.photo = photo;
+    public UserDto(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.roles = user.getRoles();
+        this.photo = user.getPhoto();
+        this.posts = user.getPosts();
     }
 
     public boolean hasRole(String roleName){

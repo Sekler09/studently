@@ -28,7 +28,6 @@ public class UserService {
             }
             String encodedPassword = this.passwordService.hashPassword(user.getPassword());
             user.setPassword(encodedPassword);
-            user.setActive(false);
             roleService.setUserRole(user);
             return userRepository.save(user);
 
@@ -50,7 +49,7 @@ public class UserService {
         }
 
 
-        return new UserDto(user.getId(), user.getName(), user.getEmail(), user.getRoles(), user.getPhoto());
+        return new UserDto(user);
     }
 
     public UserDto setAuthorRole(Long id) throws Exception {
@@ -64,6 +63,20 @@ public class UserService {
         roleService.setAuthorRole(user);
         User savedUser = userRepository.save(user);
 
-        return new UserDto(savedUser.getId(), savedUser.getName(), savedUser.getEmail(), savedUser.getRoles(), savedUser.getPhoto());
+        return new UserDto(savedUser);
+    }
+
+    public UserDto setAdminRole(Long id) throws Exception {
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (optionalUser.isEmpty()) {
+            throw new Exception("Unable to change user's role. Please try again later.");
+        }
+
+        User user = optionalUser.get();
+        roleService.setAdminRole(user);
+        User savedUser = userRepository.save(user);
+
+        return new UserDto(savedUser);
     }
 }
