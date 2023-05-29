@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="pl-10 pr-10">
+<div th:replace="~{fragments/header :: header}" />
+<div class="flex w-1/2">
+  <p th:text="${post.author.name}" />
+  <img th:if="${post.author.photo != ''}" th:src="@{${'/user-photos/' + post.author.id +'/'+ post.author.photo}}" class="w-20 h-20" />
+  <img th:unless="${post.author.photo != ''}" th:src="@{${'/user-photos/user.png'}}" class="w-20" />
+  <h1 th:text="${post.title}"/>
+  <p th:text="${post.text}"/>
+  <p th:text="${post.formatDate(post.created_at)}"/>
+  <p th:if="${post.created_at != post.edited_at}" th:text="'(Edited:' +  ${post.formatDate(post.edited_at)} + ')'"/>
+  <a th:if="${loginedUser != null and loginedUser.id == post.author.id}" th:href="'/post/' + ${post.id} + '/edit'" class="btn btn-warning">Edit</a>
+  <form th:if="${loginedUser != null and loginedUser.id == post.author.id}" th:action="'/post/' + ${post.id} + '/delete'" method="post">
+    <button type="submit" >Delete</button>
+  </form>
+</div>
+</body>
+</html>

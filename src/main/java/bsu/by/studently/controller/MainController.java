@@ -67,8 +67,7 @@ public class MainController {
             } else {
                 Files.createDirectories(Paths.get(uploadDir));
             }
-            UserDto user = userService.authenticate(suspect.getEmail(), suspect.getPassword());
-            request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute("user", new UserDto(savedUser));
             return "redirect:/profile";
         } catch (Exception e) {
             model.addAttribute("registerError", e.getMessage());
@@ -128,12 +127,10 @@ public class MainController {
     }
 
 
-    @ModelAttribute("profileLink")
-    public String profileLink(HttpServletRequest request) {
-        UserDto user = (UserDto) request.getSession().getAttribute("user");
-        return user != null ? "/profile" : null;
+    @ModelAttribute("loginedUser")
+    public UserDto getLoginedUser(HttpServletRequest request){
+        return (UserDto) request.getSession().getAttribute("user");
     }
-
 
 
 }

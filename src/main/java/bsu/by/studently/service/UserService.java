@@ -1,7 +1,6 @@
 package bsu.by.studently.service;
 
 import bsu.by.studently.dto.UserDto;
-import bsu.by.studently.model.Role;
 import bsu.by.studently.model.User;
 import bsu.by.studently.repository.UserRepository;
 import org.springframework.stereotype.Service;

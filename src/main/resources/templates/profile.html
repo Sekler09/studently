@@ -29,7 +29,7 @@
     <button class="hover:underline hover:text-blue-600" type="submit" th:text="'Set ADMIN'"></button>
   </form>
   <h1>My posts</h1>
-  <div th:each="el : ${profiler.posts}" class="border-2 border-solid border-black mt-4">
+  <div th:each="el : ${loginedUser.posts}" class="border-2 border-solid border-black mt-4">
     <h3 th:text="${el.title}"/>
     <h3 th:text="${el.text}"/>
     <!--    <a th:href="'/blog/' + ${el.id}" class="btn btn-warning">Details</a>-->

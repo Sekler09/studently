@@ -3,7 +3,10 @@ package bsu.by.studently.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 @Entity(name = "posts")
 @Table(
@@ -114,5 +117,10 @@ public class Post {
 
     public Long getId() {
         return id;
+    }
+
+    public String formatDate(LocalDateTime date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm").localizedBy(Locale.US);
+        return date.format(formatter);
     }
 }

@@ -44,9 +44,8 @@ public class AdminController {
         }
     }
 
-    @ModelAttribute("profileLink")
-    public String profileLink(HttpServletRequest request) {
-        UserDto user = (UserDto) request.getSession().getAttribute("user");
-        return user != null ? "/profile" : null;
+    @ModelAttribute("loginedUser")
+    public UserDto getLoginedUser(HttpServletRequest request){
+        return (UserDto) request.getSession().getAttribute("user");
     }
 }
