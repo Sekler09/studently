@@ -7,17 +7,24 @@
 </head>
 <body class="pl-10 pr-10">
 <div th:replace="~{fragments/header :: header}" />
-<div class="flex w-1/2">
-  <p th:text="${post.author.name}" />
-  <img th:if="${post.author.photo != ''}" th:src="@{${'/user-photos/' + post.author.id +'/'+ post.author.photo}}" class="w-20 h-20" />
-  <img th:unless="${post.author.photo != ''}" th:src="@{${'/user-photos/user.png'}}" class="w-20" />
-  <h1 th:text="${post.title}"/>
-  <p th:text="${post.text}"/>
-  <p th:text="${post.formatDate(post.created_at)}"/>
-  <p th:if="${post.created_at != post.edited_at}" th:text="'(Edited:' +  ${post.formatDate(post.edited_at)} + ')'"/>
-  <a th:if="${loginedUser != null and loginedUser.id == post.author.id}" th:href="'/post/' + ${post.id} + '/edit'" class="btn btn-warning">Edit</a>
+<div class="flex w-1/2 flex-col items-start ">
+  <div class="flex items-start space-x-4">
+    <img th:if="${post.author.photo != ''}" th:src="@{${'/user-photos/' + post.author.id +'/'+ post.author.photo}}" class="w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" />
+    <img th:unless="${post.author.photo != ''}" th:src="@{${'/user-photos/user.png'}}" class="w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" />
+    <div class="font-medium dark:text-white">
+      <div th:text="${post.author.name}"></div>
+      <div class="text-sm text-gray-500 dark:text-gray-400" th:text="${post.formatDate(post.created_at)}">
+        <span class="text-sm text-gray-500 dark:text-gray-400" th:if="${post.created_at != post.edited_at}" th:text="'(Edited:' +  ${post.formatDate(post.edited_at)} + ')'">
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <h1 class="text-xl font-bold text-black-500" th:text="${post.title}"/>
+  <p class="text-sm text-gray-500" th:text="${post.text}"/>
+  <a th:text="#{edit}" th:if="${loginedUser != null and loginedUser.id == post.author.id}" th:href="'/post/' + ${post.id} + '/edit'" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"></a>
   <form th:if="${loginedUser != null and loginedUser.id == post.author.id}" th:action="'/post/' + ${post.id} + '/delete'" method="post">
-    <button type="submit" >Delete</button>
+    <button type="submit" th:text="#{delete}" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
   </form>
 </div>
 </body>

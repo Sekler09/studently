@@ -15,14 +15,14 @@
     </div>
 
     <div class="">
-      <div class="w-1/2 flex justify-around" th:if="${loginedUser != null}">
+      <div class="flex+" th:if="${loginedUser != null}">
         <a href="/profile">
-          <img th:if="${loginedUser.photo != ''}" th:src="@{${'/user-photos/' + loginedUser.id +'/'+ loginedUser.photo}}" class="w-20 h-20" />
-          <img th:unless="${loginedUser.photo != ''}" th:src="@{${'/user-photos/user.png'}}" class="w-20" />
+          <img th:if="${loginedUser.photo != ''}" th:src="@{${'/user-photos/' + loginedUser.id +'/'+ loginedUser.photo}}" class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" />
+          <img th:unless="${loginedUser.photo != ''}" th:src="@{${'/user-photos/user.png'}}" class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"/>
         </a>
       </div>
-      <div class="w-1/2 flex justify-around" th:unless="${loginedUser != null}">
-        <a href="/login">Login</a>
+      <div class="flex" th:unless="${loginedUser != null}">
+        <a class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" href="/login" th:text="#{header.login}"></a>
       </div>
     </div>
   </nav>

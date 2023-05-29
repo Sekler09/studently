@@ -11,12 +11,13 @@
 <form class="grid gap-2 max-w-xs mx-auto" th:action="@{/register}" th:object="${suspect}" enctype="multipart/form-data" method="POST">
   <div class="flex flex-col">
     <label th:text="#{form.nameLabel} + ': '" for="username" />
-    <input type="text" id="username" placeholder="username" th:field="*{name}" class="border-2 rounded-md px-2 py-1">
+    <input type="text" id="username" required placeholder="username" th:field="*{name}" class="border-2 rounded-md px-2 py-1">
   </div>
   <div class="flex flex-col">
     <label th:text="#{form.emailLabel} + ': '" for="email" />
     <input
             type="email"
+            required
             id="email"
             placeholder="example@ex.com"
             th:field="*{email}"
@@ -27,10 +28,10 @@
   </div>
   <div class="flex flex-col">
     <label th:text="#{form.passwordLabel} + ': '" for="password" />
-    <input type="password" id="password" placeholder="password" th:field="*{password}" class="border-2 rounded-md px-2 py-1">
+    <input type="password" id="password" required placeholder="password" th:field="*{password}" class="border-2 rounded-md px-2 py-1">
   </div>
   <div class="flex flex-col">
-    <label th:text="Photo" for="photo" />
+    <label th:text="#{form.photoLabel}" for="photo" />
     <input type="file" id="photo" name="image" accept="image/png, image/jpeg" class="border-2 rounded-md px-2 py-1" />
   </div>
   <button

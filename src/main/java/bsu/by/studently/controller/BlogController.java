@@ -47,6 +47,7 @@ public class BlogController {
         User currentUser = userRepository.findByEmail(user.getEmail());
         currentUser.addPost(post);
         postRepository.save(post);
+        request.getSession().setAttribute("user", new UserDto(userRepository.findByEmail(user.getEmail())));
         return "redirect:/";
     }
 

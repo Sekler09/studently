@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 
 @RequestMapping
@@ -36,6 +37,7 @@ public class MainController {
     @GetMapping("/")
     public String getHomePage(Model model, @Param("keyword") String keyword){
         List<Post> posts = postService.listAll(keyword);
+        Collections.reverse(posts);
         model.addAttribute("posts", posts);
         model.addAttribute("keyword", keyword);
         return "home";

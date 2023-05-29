@@ -1,6 +1,7 @@
 package bsu.by.studently.controller;
 
 import bsu.by.studently.dto.UserDto;
+import bsu.by.studently.model.User;
 import bsu.by.studently.repository.UserRepository;
 import bsu.by.studently.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -44,6 +46,18 @@ public class AdminController {
         }
     }
 
+    @PostMapping("/user/{id}/delete")
+    public String deleteUser(@PathVariable("id") Long id, HttpServletRequest request, Model model){
+        UserDto userDto = (UserDto) request.getSession().getAttribute("user");
+        if(userDto!= null && userDto.hasRole("ADMIN")){
+            User user = userRepository.findById(id).orElse(null);
+            if(user != null){
+                userRepository.deleteById(id);
+            }
+            return "redirect:/users";
+        }
+        return "redirect:/";
+    }
     @ModelAttribute("loginedUser")
     public UserDto getLoginedUser(HttpServletRequest request){
         return (UserDto) request.getSession().getAttribute("user");
